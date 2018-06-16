@@ -15,9 +15,3 @@ artifacts:
 - path: '**\artifacts\nuget\*.nupkg'
   name: NuGet
   
-deploy:
-- provider: NuGet
-  api_key:
-    secure: 3eDHfk4d9Ye2+sj4T+7t6AlSDvIseFx/QuRtt5fHy8QOp+Hl+6X9daiBXRl3qpuv
-  on:
-    appveyor_repo_tag: true
