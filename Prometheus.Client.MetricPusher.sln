@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B922FA4B-1584-4EA7-8656-F9034FB45F9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{285A8931-C09A-482E-9EF3-D90AA616A0FD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{852492CB-7359-4A9F-B769-9CF468B4B9A5}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		pack.ps1 = pack.ps1
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher\Prometheus.Client.MetricPusher.csproj", "{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{852492CB-7359-4A9F-B769-9CF468B4B9A5} = {285A8931-C09A-482E-9EF3-D90AA616A0FD}
+		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}
+	EndGlobalSection
+EndGlobal

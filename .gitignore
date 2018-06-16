@@ -1,0 +1,5 @@
+﻿bin
+obj
+.idea
+*.user
+.vs
