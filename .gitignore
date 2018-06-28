@@ -1,5 +1,13 @@
-﻿bin
-obj
-.idea
+﻿*.nupkg
 *.user
+*.suo
+*.exe
+*.DotSettings
+
 .vs
+bin
+obj
+packages
+.idea
+
+**/BenchmarkDotNet.Artifacts/*
