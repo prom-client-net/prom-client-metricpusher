@@ -5,6 +5,8 @@
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
     <VersionPrefix>0.0.1</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">net45;netstandard1.3;netstandard2.0</TargetFrameworks>
     <PackageId>Prometheus.Client.MetricPusher</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
     <PackageIconUrl>https://image.ibb.co/k4Sc0k/prometheus.png</PackageIconUrl>
@@ -13,9 +15,14 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System.Net.Http"/>
+  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="1.5.1" />
+    <PackageReference Include="Prometheus.Client" Version="1.5.1"/>
   </ItemGroup>
 </Project>
