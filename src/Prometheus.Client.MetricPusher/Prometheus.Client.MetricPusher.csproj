@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>.NET client metric push for prometheus.io</Description>
     <Copyright>2018 © Sergey Kuznetsov</Copyright>
@@ -16,13 +15,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NET452</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Prometheus.Client" Version="1.5.1" />
   </ItemGroup>
-
 </Project>

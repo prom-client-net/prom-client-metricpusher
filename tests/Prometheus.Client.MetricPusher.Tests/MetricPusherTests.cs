@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
 using Xunit;
 
-namespace Prometheus.Client.MetricPusher.Test
+namespace Prometheus.Client.MetricPusher.Tests
 {
     public class MetricPushServiceTest : BaseMetricPushServiceTest
     {
@@ -39,7 +39,7 @@ namespace Prometheus.Client.MetricPusher.Test
         }
 
         [Fact]
-        public void should_send_metrics_and_get_success()
+        public void Should_Send_Metrics_And_Get_Success()
         {
             var memoryStream = new MemoryStream();
             ScrapeHandler.ProcessScrapeRequest(_metrics.CollectAll(), null, memoryStream);

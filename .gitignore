@@ -2,7 +2,6 @@
 *.user
 *.suo
 *.exe
-*.DotSettings
 
 .vs
 bin

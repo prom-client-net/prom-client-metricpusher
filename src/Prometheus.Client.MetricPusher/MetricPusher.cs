@@ -8,49 +8,37 @@ using Prometheus.Client.Contracts;
 
 namespace Prometheus.Client.MetricPusher
 {
-    public class MetricPushService : IMetricPushService
+    /// <inheritdoc />
+    public class MetricPusher : IMetricPusher
     {
         private HttpClient _httpClient;
 
-        private const string ContentType = "text/plain; version=0.0.4";
+        private const string _contentType = "text/plain; version=0.0.4";
 
         protected virtual HttpMessageHandler MessageHandler => new HttpClientHandler();
 
-        public MetricPushService()
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        public MetricPusher()
         {
             _httpClient = new HttpClient(MessageHandler);
         }
 
-        /// <summary>
-        /// Push metrics to single pushgateway endpoint
-        /// </summary>
-        /// <param name="metricFamilies">Collection of metrics</param>
-        /// <param name="endpoint">PushGateway endpoint</param>
-        /// <param name="job">job name</param>
-        /// <param name="instance">instance name</param>
-        /// <param name="contentType">content-type</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public async Task PushAsync(IEnumerable<CMetricFamily> metricFamilies, string endpoint, string job, string instance, string contentType)
         {
             await PushAsync(metricFamilies, new[] { endpoint }, job, instance, contentType).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Push metrics to single pushgateway endpoint
-        /// </summary>
-        /// <param name="metrics">Collection of metrics</param>
-        /// <param name="endpoints">PushGateway endpoints - fault-tolerance</param>
-        /// <param name="job">job name</param>
-        /// <param name="instance">instance name</param>
-        /// <param name="contentType">content-type</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public async Task PushAsync(IEnumerable<CMetricFamily> metrics, string[] endpoints, string job, string instance, string contentType)
         {
             if (_httpClient == null)
             {
                 _httpClient = new HttpClient();
             }
-            var cntType = ContentType;
+            var cntType = _contentType;
             if (!string.IsNullOrEmpty(contentType))
             {
                 cntType = contentType;

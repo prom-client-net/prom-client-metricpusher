@@ -4,10 +4,13 @@ using Prometheus.Client.Contracts;
 
 namespace Prometheus.Client.MetricPusher
 {
-    public interface IMetricPushService
+    /// <summary>
+    ///     Service for Push Gateway 
+    /// </summary>
+    public interface IMetricPusher
     {
         /// <summary>
-        /// Push metrics to single pushgateway endpoint
+        ///     Push metrics to single pushgateway endpoint
         /// </summary>
         /// <param name="metricFamilies">Collection of metrics</param>
         /// <param name="endpoint">PushGateway endpoint</param>
@@ -15,10 +18,10 @@ namespace Prometheus.Client.MetricPusher
         /// <param name="instance">instance name</param>
         /// <param name="contentType">content-type</param>
         /// <returns></returns>
-        Task PushAsync(IEnumerable<CMetricFamily> metricFamilies, string endpoint, string job, string instance,
-            string contentType);
+        Task PushAsync(IEnumerable<CMetricFamily> metricFamilies, string endpoint, string job, string instance, string contentType);
+
         /// <summary>
-        /// Push metrics to single pushgateway endpoint
+        ///     Push metrics to single pushgateway endpoint
         /// </summary>
         /// <param name="metrics">Collection of metrics</param>
         /// <param name="endpoints">PushGateway endpoints - fault-tolerance</param>
@@ -26,7 +29,6 @@ namespace Prometheus.Client.MetricPusher
         /// <param name="instance">instance name</param>
         /// <param name="contentType">content-type</param>
         /// <returns></returns>
-        Task PushAsync(IEnumerable<CMetricFamily> metrics, string[] endpoints, string job, string instance,
-            string contentType);
+        Task PushAsync(IEnumerable<CMetricFamily> metrics, string[] endpoints, string job, string instance, string contentType);
     }
 }
