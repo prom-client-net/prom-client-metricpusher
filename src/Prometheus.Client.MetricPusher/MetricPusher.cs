@@ -1,105 +1,60 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Prometheus.Client.Contracts;
+using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher
 {
     /// <inheritdoc />
     public class MetricPusher : IMetricPusher
     {
-        private HttpClient _httpClient;
-
+        private readonly HttpClient _httpClient;
         private const string _contentType = "text/plain; version=0.0.4";
-
-        protected virtual HttpMessageHandler MessageHandler => new HttpClientHandler();
+        private readonly ICollectorRegistry _collectorRegistry;
+        private readonly Uri _targetUri;
 
         /// <summary>
         ///     Constructor
         /// </summary>
-        public MetricPusher()
+        public MetricPusher(string endpoint, string job, string instance)
+            : this(null, endpoint, job, instance)
         {
-            _httpClient = new HttpClient(MessageHandler);
+            
         }
-
-        /// <inheritdoc />
-        public async Task PushAsync(IEnumerable<CMetricFamily> metricFamilies, string endpoint, string job, string instance, string contentType)
+        
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, string instance)
         {
-            await PushAsync(metricFamilies, new[] { endpoint }, job, instance, contentType).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
-        public async Task PushAsync(IEnumerable<CMetricFamily> metrics, string[] endpoints, string job, string instance, string contentType)
-        {
-            if (_httpClient == null)
-            {
-                _httpClient = new HttpClient();
-            }
-            var cntType = _contentType;
-            if (!string.IsNullOrEmpty(contentType))
-            {
-                cntType = contentType;
-            }
             if (string.IsNullOrEmpty(job))
-            {
                 throw new ArgumentNullException(nameof(job));
-            }
 
-            var tasks = new List<Task<HttpResponseMessage>>(endpoints.Length);
-            var streamsToDispose = new List<Stream>();
+            if (string.IsNullOrEmpty(endpoint))
+                throw new ArgumentNullException(nameof(endpoint));
+            
+            var url = $"{endpoint.TrimEnd('/')}/metrics/job/{job}";
+            if (!string.IsNullOrEmpty(instance))
+                url = $"{url}/instance/{instance}";
 
-            foreach (var endpoint in endpoints)
+            if (!Uri.TryCreate(url, UriKind.Absolute, out _targetUri))
+                throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
+            
+            _collectorRegistry = collectorRegistry ?? CollectorRegistry.Instance;
+            _httpClient = new HttpClient();
+        }
+
+        /// <inheritdoc />
+        public async Task PushAsync()
+        {
+            using (var memoryStream = new MemoryStream())
             {
-                var memoryStream = new MemoryStream();
-                streamsToDispose.Add(memoryStream);
-                ScrapeHandler.ProcessScrapeRequest(metrics, cntType, memoryStream);
+                var metrics = _collectorRegistry.CollectAll();
+                ScrapeHandler.ProcessScrapeRequest(metrics, _contentType, memoryStream);
                 memoryStream.Position = 0;
-                var debugString = Encoding.UTF8.GetString(memoryStream.ToArray());
-                System.Diagnostics.Debug.WriteLine(debugString);
-
-                if (string.IsNullOrEmpty(endpoint))
-                {
-                    throw new ArgumentNullException(nameof(endpoint));
-                }
-
-                var url = $"{endpoint.TrimEnd('/')}/metrics/job/{job}";
-                if (!string.IsNullOrEmpty(instance))
-                {
-                    url = $"{url}/instance/{instance}";
-                }
-
-                if (!Uri.TryCreate(url, UriKind.Absolute, out var targetUrl))
-                {
-                    throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
-                }
-
-                var streamContent = new StreamContent(memoryStream);
-                tasks.Add(_httpClient.PostAsync(targetUrl, streamContent));
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-            Exception exception = null;
-            foreach (var task in tasks)
-            {
-                var response = await task.ConfigureAwait(false);
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex)
-                {
-                    exception = ex;
-                }
-            }
-
-            streamsToDispose.ForEach(s => s.Dispose());
-
-            if (exception != null)
-            {
-                throw exception;
+                var response = await _httpClient.PostAsync(_targetUri, new StreamContent(memoryStream));
+                response.EnsureSuccessStatusCode();
             }
         }
     }
