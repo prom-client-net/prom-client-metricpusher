@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
 
@@ -14,18 +15,16 @@ namespace Prometheus.Client.MetricPusher
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
+        public MetricPusher(string endpoint, string job)
+            : this(endpoint, job, null)
+        {
+        }
+        
         public MetricPusher(string endpoint, string job, string instance)
             : this(null, endpoint, job, instance)
         {
-            
         }
-        
-        /// <summary>
-        ///     Constructor
-        /// </summary>
+
         public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, string instance)
         {
             if (string.IsNullOrEmpty(job))
@@ -33,14 +32,14 @@ namespace Prometheus.Client.MetricPusher
 
             if (string.IsNullOrEmpty(endpoint))
                 throw new ArgumentNullException(nameof(endpoint));
-            
-            var url = $"{endpoint.TrimEnd('/')}/metrics/job/{job}";
-            if (!string.IsNullOrEmpty(instance))
-                url = $"{url}/instance/{instance}";
 
-            if (!Uri.TryCreate(url, UriKind.Absolute, out _targetUri))
+            var stringBuilder = new StringBuilder(endpoint.TrimEnd('/') + "/metrics/job/" + job);
+            if (!string.IsNullOrEmpty(instance))
+                stringBuilder.Append("/instance/" + instance);
+
+            if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
-            
+
             _collectorRegistry = collectorRegistry ?? CollectorRegistry.Instance;
             _httpClient = new HttpClient();
         }
