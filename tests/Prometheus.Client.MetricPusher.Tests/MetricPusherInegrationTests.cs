@@ -33,7 +33,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             var counter = Metrics.CreateCounter("worker_counter1", "help");
             var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker");
             
-            var worker = new MetricPusherServer(pusher);
+            var worker = new MetricPushServer(pusher);
             worker.Start();
 
             for (int i = 0; i < 10; i++)

@@ -4,42 +4,38 @@ using System.Threading.Tasks;
 
 namespace Prometheus.Client.MetricPusher
 {
-    public class MetricPusherServer
+    public class MetricPushServer : IMetricPushServer
     {
         private readonly IMetricPusher[] _metricPushers;
         private readonly TimeSpan _pushInterval;
         private CancellationTokenSource _cts;
         private Task _task;
         
-        public MetricPusherServer(IMetricPusher metricPusher)
+        public MetricPushServer(IMetricPusher metricPusher)
             : this(new[] { metricPusher })
         {
         }
         
-        public MetricPusherServer(IMetricPusher metricPusher, TimeSpan pushInterval)
+        public MetricPushServer(IMetricPusher metricPusher, TimeSpan pushInterval)
             : this(new[] { metricPusher }, pushInterval)
         {
         }
 
-        public MetricPusherServer(IMetricPusher[] metricPushers)
+        public MetricPushServer(IMetricPusher[] metricPushers)
             : this(metricPushers, TimeSpan.FromMilliseconds(1000))
         {
         }
 
-        public MetricPusherServer(IMetricPusher[] metricPushers, TimeSpan pushInterval)
+        public MetricPushServer(IMetricPusher[] metricPushers, TimeSpan pushInterval)
         {
             _metricPushers = metricPushers;
             _pushInterval = pushInterval;
         }
 
-        /// <summary>
-        ///     Server is Running?
-        /// </summary>
+        /// <inheritdoc />
         public bool IsRunning => _task != null;
 
-        /// <summary>
-        ///     Start MetricPusher worker
-        /// </summary>
+        /// <inheritdoc />
         public void Start()
         {
             if (IsRunning)
@@ -49,9 +45,7 @@ namespace Prometheus.Client.MetricPusher
             _task = Run();
         }
 
-        /// <summary>
-        ///     Stop MetricPusher server
-        /// </summary>
+        /// <inheritdoc />
         public void Stop()
         {
             if (!IsRunning)
