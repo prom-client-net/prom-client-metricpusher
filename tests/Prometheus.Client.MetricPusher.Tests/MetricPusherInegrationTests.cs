@@ -22,8 +22,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             var counter = Metrics.CreateCounter("test_c12", "help");
             counter.Inc();
 
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "test-instance");
-
+            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance");
             await pusher.PushAsync();
         }
 
