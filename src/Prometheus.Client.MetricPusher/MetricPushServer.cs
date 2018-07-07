@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +12,12 @@ namespace Prometheus.Client.MetricPusher
         private readonly TimeSpan _pushInterval;
         private CancellationTokenSource _cts;
         private Task _task;
-        
+
         public MetricPushServer(IMetricPusher metricPusher)
             : this(new[] { metricPusher })
         {
         }
-        
+
         public MetricPushServer(IMetricPusher metricPusher, TimeSpan pushInterval)
             : this(new[] { metricPusher }, pushInterval)
         {
@@ -59,12 +61,16 @@ namespace Prometheus.Client.MetricPusher
         {
             return Task.Run(async () =>
             {
-                foreach (var metricPusher in _metricPushers)
+                var innerTasks = _metricPushers.Select(metricPusher => Task.Run(async () =>
+                {
                     while (true)
                     {
                         await metricPusher.PushAsync();
                         await Task.Delay(_pushInterval);
                     }
+                }, _cts.Token));
+                   
+                await Task.WhenAll(innerTasks);
             }, _cts.Token);
         }
     }
