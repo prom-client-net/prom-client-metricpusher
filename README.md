@@ -7,6 +7,10 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/46twv9kokpnv6952?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-metricpusher)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
+## PushGateaway
+
+Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to Pushgateway server that you can install from [here](https://github.com/prometheus/pushgateway/releases "here").
+
 ## Installation
 
 	dotnet add package Prometheus.Client.MetricPusher
@@ -15,11 +19,10 @@
 
 All contents of this package are licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## PushGateaway
 
-Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to Pushgateway server that you can install from [here](https://github.com/prometheus/pushgateway/releases "here").
+## Quik start
 
-### Pushgateway example
+[Examples](https://github.com/PrometheusClientNet/Prometheus.Client.Examples/tree/master/MetricPusher)
 
 One push. You can use Timer for regularly push to PushGateway:
 ```csharp
@@ -39,5 +42,12 @@ worker.Start();
 worker.Stop();
 
 ```
+
+## Contribute
+
+Contributions to the package are always welcome!
+
+* Report any bugs or issues you find on the [issue tracker](https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher/issues).
+* You can grab the source code at the package's [git repository](https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher).
 
 
