@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>.NET client metric push for prometheus.io</Description>
+    <Description>Push metrics to a PushGateaway</Description>
     <Copyright>2018 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
     <VersionPrefix>0.3.0</VersionPrefix>
