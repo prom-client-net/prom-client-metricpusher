@@ -1,5 +1,3 @@
-dotnet pack $env:APPVEYOR_BUILD_FOLDER\src\Prometheus.Client.MetricPusher -c Release --include-symbols --no-build -o artifacts\nuget
-
 if($env:APPVEYOR_REPO_TAG -eq "false") {
     dotnet pack $env:APPVEYOR_BUILD_FOLDER\src\Prometheus.Client.MetricPusher -c Release --include-symbols --no-build --version-suffix build$env:APPVEYOR_BUILD_NUMBER -o artifacts\myget
 }
