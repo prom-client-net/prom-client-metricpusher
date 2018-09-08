@@ -3,7 +3,7 @@
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
     <Copyright>2018 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionPrefix>0.2.1</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.3;netstandard2.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">net45;netstandard1.3;netstandard2.0</TargetFrameworks>
@@ -23,6 +23,6 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="1.5.1" />
+    <PackageReference Include="Prometheus.Client" Version="[1.5.1,1.6.0)" />
   </ItemGroup>
 </Project>

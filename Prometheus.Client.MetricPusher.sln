@@ -13,11 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		LICENSE = LICENSE
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{852492CB-7359-4A9F-B769-9CF468B4B9A5}"
-	ProjectSection(SolutionItems) = preProject
-		build.ps1 = build.ps1
 		pack.ps1 = pack.ps1
 	EndProjectSection
 EndProject
@@ -46,7 +41,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{852492CB-7359-4A9F-B769-9CF468B4B9A5} = {285A8931-C09A-482E-9EF3-D90AA616A0FD}
 		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
 		{8809D655-B7F7-466C-A97B-08E23C4F220B} = {868CBF44-EBF0-4E33-B650-F2AB1B11F199}
 	EndGlobalSection
