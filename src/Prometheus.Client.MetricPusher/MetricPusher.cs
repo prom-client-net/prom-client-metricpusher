@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
+using Prometheus.Client.Collectors.Abstractions;
 
 namespace Prometheus.Client.MetricPusher
 {
@@ -11,7 +12,6 @@ namespace Prometheus.Client.MetricPusher
     public class MetricPusher : IMetricPusher
     {
         private readonly HttpClient _httpClient;
-        private const string _contentType = "text/plain; version=0.0.4";
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
@@ -19,7 +19,7 @@ namespace Prometheus.Client.MetricPusher
             : this(endpoint, job, null)
         {
         }
-        
+
         public MetricPusher(string endpoint, string job, string instance)
             : this(null, endpoint, job, instance)
         {
@@ -47,14 +47,10 @@ namespace Prometheus.Client.MetricPusher
         /// <inheritdoc />
         public async Task PushAsync()
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                var metrics = _collectorRegistry.CollectAll();
-                ScrapeHandler.ProcessScrapeRequest(metrics, _contentType, memoryStream);
-                memoryStream.Position = 0;
-                var response = await _httpClient.PostAsync(_targetUri, new StreamContent(memoryStream));
-                response.EnsureSuccessStatusCode();
-            }
+            var memoryStream = ScrapeHandler.Process(_collectorRegistry);
+            var response = await _httpClient.PostAsync(_targetUri, new StreamContent(memoryStream));
+            response.EnsureSuccessStatusCode();
+            memoryStream.Dispose();
         }
     }
 }
