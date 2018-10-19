@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,13 +65,25 @@ namespace Prometheus.Client.MetricPusher
                 {
                     while (true)
                     {
-                        await metricPusher.PushAsync();
-                        await Task.Delay(_pushInterval);
+                        try
+                        {
+                            await metricPusher.PushAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            OnPushError(metricPusher, ex);
+                        }
+
+                        await Task.Delay(_pushInterval, _cts.Token);
                     }
                 }, _cts.Token));
                    
                 await Task.WhenAll(innerTasks);
             }, _cts.Token);
+        }
+
+        protected virtual void OnPushError(IMetricPusher metricPusher, Exception exception)
+        {            
         }
     }
 }
