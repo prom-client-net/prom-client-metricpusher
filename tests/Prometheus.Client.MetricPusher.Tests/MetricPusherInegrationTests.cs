@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -54,5 +55,18 @@ namespace Prometheus.Client.MetricPusher.Tests
             }
             worker.Stop();
         }
-    }
+
+        [Fact]
+        public async Task TestPushContinuesOnError()
+        {
+            var pusher = new TestPusher(async () => throw new Exception("Push error"));
+            
+            var worker = new MetricPushServer(pusher, TimeSpan.FromSeconds(0.05));
+            worker.Start();
+            await Task.Delay(150);
+            Assert.Equal(3, pusher.PushCounter);
+            worker.Stop();
+        }
+    }       
+    
 }
