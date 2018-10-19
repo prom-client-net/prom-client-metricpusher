@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher
 {

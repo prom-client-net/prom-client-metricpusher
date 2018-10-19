@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -17,7 +15,7 @@ namespace Prometheus.Client.MetricPusher
         private readonly HttpClient _httpClient;
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
-               
+
         public MetricPusher(string endpoint, string job, string instance = null, IEnumerable<KeyValuePair<string, string>> labels = null)
             : this(null, endpoint, job, instance, labels)
         {
@@ -31,18 +29,29 @@ namespace Prometheus.Client.MetricPusher
             if (string.IsNullOrEmpty(endpoint))
                 throw new ArgumentNullException(nameof(endpoint));
 
-            var stringBuilder = new StringBuilder(endpoint.TrimEnd('/') + "/metrics/job/" + job);
+            var stringBuilder = new StringBuilder(endpoint);
+            if (!endpoint.EndsWith("/"))
+                stringBuilder.Append("/");
+
+            stringBuilder
+                .Append("metrics/job/")
+                .Append(job);
+
             if (!string.IsNullOrEmpty(instance))
-                stringBuilder.Append("/instance/" + instance);
-            
-            if (labels != null)
             {
-                foreach (var pair in labels.Where(l=>!string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
-                {
-                    stringBuilder.Append("/" + pair.Key + "/" + pair.Value);
-                }
+                stringBuilder
+                    .Append("/instance/")
+                    .Append(instance);
             }
 
+            if (labels != null)
+                foreach (var pair in labels.Where(l => !string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
+                    stringBuilder
+                        .Append("/")
+                        .Append(pair.Key)
+                        .Append("/")
+                        .Append(pair.Value);
+                
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
 
