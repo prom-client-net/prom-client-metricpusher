@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +17,13 @@ namespace Prometheus.Client.MetricPusher
         private readonly HttpClient _httpClient;
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
-
-        public MetricPusher(string endpoint, string job)
-            : this(endpoint, job, null)
+               
+        public MetricPusher(string endpoint, string job, string instance = null, IEnumerable<KeyValuePair<string, string>> labels = null)
+            : this(null, endpoint, job, instance, labels)
         {
         }
 
-        public MetricPusher(string endpoint, string job, string instance)
-            : this(null, endpoint, job, instance)
-        {
-        }
-
-        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, string instance)
+        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, string instance, IEnumerable<KeyValuePair<string, string>> labels)
         {
             if (string.IsNullOrEmpty(job))
                 throw new ArgumentNullException(nameof(job));
@@ -36,6 +34,14 @@ namespace Prometheus.Client.MetricPusher
             var stringBuilder = new StringBuilder(endpoint.TrimEnd('/') + "/metrics/job/" + job);
             if (!string.IsNullOrEmpty(instance))
                 stringBuilder.Append("/instance/" + instance);
+            
+            if (labels != null)
+            {
+                foreach (var pair in labels.Where(l=>!string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
+                {
+                    stringBuilder.Append("/" + pair.Key + "/" + pair.Value);
+                }
+            }
 
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
