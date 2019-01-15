@@ -65,7 +65,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             
             var worker = new MetricPushServer(pusher, TimeSpan.FromSeconds(0.05));
             worker.Start();
-            Thread.Sleep(3000);
+            Thread.Sleep(150);
             Assert.Equal(3, pusher.PushCounter);
             worker.Stop();
         }
