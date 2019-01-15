@@ -16,12 +16,14 @@ namespace Prometheus.Client.MetricPusher
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
-        public MetricPusher(string endpoint, string job, string instance = null, IEnumerable<KeyValuePair<string, string>> labels = null)
-            : this(null, endpoint, job, instance, labels)
+        public MetricPusher(string endpoint, string job, Dictionary<string, string> additionalHeaders, string instance = null,
+            IEnumerable<KeyValuePair<string, string>> labels = null)
+            : this(null, endpoint, job, additionalHeaders, instance, labels)
         {
         }
 
-        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, string instance, IEnumerable<KeyValuePair<string, string>> labels)
+        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, Dictionary<string, string> additionalHeaders, string instance,
+            IEnumerable<KeyValuePair<string, string>> labels)
         {
             if (string.IsNullOrEmpty(job))
                 throw new ArgumentNullException(nameof(job));
@@ -57,6 +59,13 @@ namespace Prometheus.Client.MetricPusher
 
             _collectorRegistry = collectorRegistry ?? CollectorRegistry.Instance;
             _httpClient = new HttpClient();
+            foreach (KeyValuePair<string, string> header in additionalHeaders)
+            {
+                _httpClient.DefaultRequestHeaders.Add(
+                    header.Key,
+                    header.Value
+                );
+            }
         }
 
         /// <inheritdoc />
