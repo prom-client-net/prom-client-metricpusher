@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -24,7 +25,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             var counter = Metrics.CreateCounter("test_c12", "help");
             counter.Inc();
 
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", new Dictionary<string, string>(), "instance");
+            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance");
             await pusher.PushAsync();
         }
 
@@ -32,7 +33,7 @@ namespace Prometheus.Client.MetricPusher.Tests
         public async Task Worker_10Step()
         {
             var counter = Metrics.CreateCounter("worker_counter1", "help");
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker", new Dictionary<string, string>());
+            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker");
             
             var worker = new MetricPushServer(pusher);
             worker.Start();
@@ -58,13 +59,13 @@ namespace Prometheus.Client.MetricPusher.Tests
         }
 
         [Fact]
-        public async Task TestPushContinuesOnError()
+        public void TestPushContinuesOnError()
         {
-            var pusher = new TestPusher(async () => throw new Exception("Push error"));
+            var pusher = new TestPusher(() => throw new Exception("Push error"));
             
             var worker = new MetricPushServer(pusher, TimeSpan.FromSeconds(0.05));
             worker.Start();
-            await Task.Delay(150);
+            Thread.Sleep(3000);
             Assert.Equal(3, pusher.PushCounter);
             worker.Stop();
         }

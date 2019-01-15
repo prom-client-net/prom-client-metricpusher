@@ -16,14 +16,53 @@ namespace Prometheus.Client.MetricPusher
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
-        public MetricPusher(string endpoint, string job, Dictionary<string, string> additionalHeaders, string instance = null,
-            IEnumerable<KeyValuePair<string, string>> labels = null)
-            : this(null, endpoint, job, additionalHeaders, instance, labels)
+        public MetricPusher(string endpoint, string job)
+            : this(endpoint, job, instance: null)
         {
         }
 
-        public MetricPusher(ICollectorRegistry collectorRegistry, string endpoint, string job, Dictionary<string, string> additionalHeaders, string instance,
-            IEnumerable<KeyValuePair<string, string>> labels)
+        public MetricPusher(string endpoint, string job, string instance)
+            : this(endpoint, job, instance, null, null)
+        {
+        }
+
+        public MetricPusher(string endpoint, string job, Dictionary<string, string> additionalHeaders)
+            : this(endpoint, job, null, null, additionalHeaders)
+        {
+        }
+
+        public MetricPusher(string endpoint, string job,IEnumerable<KeyValuePair<string, string>> labels)
+            : this(endpoint, job, null, labels, null)
+        {
+        }
+        
+        public MetricPusher(string endpoint, string job, string instance, Dictionary<string, string> additionalHeaders)
+            : this(endpoint, job, instance, null, additionalHeaders)
+        {
+        }
+
+        public MetricPusher(string endpoint, string job, string instance, IEnumerable<KeyValuePair<string, string>> labels)
+            : this(endpoint, job, instance, labels, null)
+        {
+        }
+
+        public MetricPusher(
+            string endpoint,
+            string job,
+            string instance,
+            IEnumerable<KeyValuePair<string, string>> labels,
+            Dictionary<string, string> additionalHeaders)
+            : this(null, endpoint, job, instance, labels, additionalHeaders)
+        {
+        }
+
+        public MetricPusher(
+            ICollectorRegistry collectorRegistry,
+            string endpoint,
+            string job,
+            string instance,
+            IEnumerable<KeyValuePair<string, string>> labels,
+            Dictionary<string, string> additionalHeaders)
         {
             if (string.IsNullOrEmpty(job))
                 throw new ArgumentNullException(nameof(job));
@@ -53,19 +92,21 @@ namespace Prometheus.Client.MetricPusher
                         .Append(pair.Key)
                         .Append("/")
                         .Append(pair.Value);
-                
+
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
 
             _collectorRegistry = collectorRegistry ?? CollectorRegistry.Instance;
+
             _httpClient = new HttpClient();
-            foreach (KeyValuePair<string, string> header in additionalHeaders)
-            {
-                _httpClient.DefaultRequestHeaders.Add(
-                    header.Key,
-                    header.Value
-                );
-            }
+            if (additionalHeaders != null)
+                foreach (KeyValuePair<string, string> header in additionalHeaders)
+                {
+                    _httpClient.DefaultRequestHeaders.Add(
+                        header.Key,
+                        header.Value
+                    );
+                }
         }
 
         /// <inheritdoc />
