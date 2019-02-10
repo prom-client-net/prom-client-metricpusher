@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,12 +13,12 @@ namespace Prometheus.Client.MetricPusher.Tests
     public class MetricPusherTests
     {
         private readonly ITestOutputHelper _output;
-        
+
         public MetricPusherTests(ITestOutputHelper output)
         {
             _output = output;
         }
-        
+
         [Fact]
         public async Task Simple_Push()
         {
@@ -29,11 +30,25 @@ namespace Prometheus.Client.MetricPusher.Tests
         }
 
         [Fact]
+        public async Task Auth_Puth()
+        {
+            var counter = Metrics.CreateCounter("test_", "help");
+            counter.Inc();
+
+            const string accessToken = "";
+            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance", new Dictionary<string, string>
+            {
+                { "Authorization", "Bearer " + accessToken }
+            });
+            await pusher.PushAsync();
+        }
+
+        [Fact]
         public async Task Worker_10Step()
         {
             var counter = Metrics.CreateCounter("worker_counter1", "help");
             var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker");
-            
+
             var worker = new MetricPushServer(pusher);
             worker.Start();
 
@@ -41,7 +56,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             {
                 counter.Inc();
                 _output.WriteLine($"Step: {i}, IsRunning: {worker.IsRunning}");
-                
+
                 switch (i)
                 {
                     case 5:
@@ -54,6 +69,7 @@ namespace Prometheus.Client.MetricPusher.Tests
 
                 await Task.Delay(2000);
             }
+
             worker.Stop();
         }
 
@@ -61,13 +77,12 @@ namespace Prometheus.Client.MetricPusher.Tests
         public void TestPushContinuesOnError()
         {
             var pusher = new TestPusher(() => throw new Exception("Push error"));
-            
+
             var worker = new MetricPushServer(pusher, TimeSpan.FromSeconds(0.05));
             worker.Start();
             Thread.Sleep(150);
             Assert.Equal(3, pusher.PushCounter);
             worker.Stop();
         }
-    }       
-    
+    }
 }

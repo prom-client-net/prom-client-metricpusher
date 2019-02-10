@@ -28,7 +28,14 @@ One push. You can use Timer for regularly push to PushGateway:
 ```csharp
 var pusher = new MetricPusher("http://localhost:9091", "pushgateway", "instance");
 await pusher.PushAsync();
+```
 
+Push with Auth:
+```csharp
+var pusher = new MetricPusher("http://localhost:9091", "pushgateway", "instance", new Dictionary<string, string>
+{
+    { "Authorization", "Bearer " + accessToken }
+});
 ```
 
 Backgroud server:
