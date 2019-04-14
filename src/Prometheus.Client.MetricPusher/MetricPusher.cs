@@ -96,11 +96,11 @@ namespace Prometheus.Client.MetricPusher
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
 
-            _collectorRegistry = collectorRegistry ?? CollectorRegistry.Instance;
+            _collectorRegistry = collectorRegistry ?? Metrics.DefaultCollectorRegistry;
 
             _httpClient = new HttpClient();
             if (additionalHeaders != null)
-                foreach (KeyValuePair<string, string> header in additionalHeaders)
+                foreach (var header in additionalHeaders)
                 {
                     _httpClient.DefaultRequestHeaders.Add(
                         header.Key,
@@ -112,7 +112,7 @@ namespace Prometheus.Client.MetricPusher
         /// <inheritdoc />
         public async Task PushAsync()
         {
-            var memoryStream = ScrapeHandler.Process(_collectorRegistry);
+            var memoryStream = await ScrapeHandler.ProcessAsync(_collectorRegistry);
             var response = await _httpClient.PostAsync(_targetUri, new StreamContent(memoryStream));
             response.EnsureSuccessStatusCode();
             memoryStream.Dispose();

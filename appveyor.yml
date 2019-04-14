@@ -1,37 +1,36 @@
-version: '{build}-{branch}'
-image: Visual Studio 2017
+version: '{branch}-build{build}'
+image: Ubuntu1804
 
 skip_commits:
   files:
     - '**/*.md'
 
 build_script:
-- pwsh: dotnet build -c Release
+  - sh: dotnet build -c Release
 
 after_build:
-- pwsh: .\pack.ps1
+  - sh: chmod +x pack.sh && ./pack.sh
   
 artifacts:
-- path: '**\artifacts\nuget\*.nupkg'
-  name: Nuget
-- path: '**\artifacts\myget\*.nupkg'
-  name: Myget
+  - path: '**\artifacts\nuget\*.nupkg'
+    name: Nuget
+  - path: '**\artifacts\myget\*.nupkg'
+    name: Myget
   
 deploy:
-
-- provider: NuGet
-  api_key:
-    secure: daQCsScgPEP6DIMLmaEdEf7W4UrrFO8h2IVZjlEkAKzYvTMaBc1l+hVkjmc8RkDx
-  artifact: NuGet
-  on:
-    appveyor_repo_tag: true   
+  - provider: NuGet
+    api_key:
+      secure: daQCsScgPEP6DIMLmaEdEf7W4UrrFO8h2IVZjlEkAKzYvTMaBc1l+hVkjmc8RkDx
+    artifact: NuGet
+    on:
+      APPVEYOR_REPO_TAG: true   
     
-- provider: NuGet
-  server: https://www.myget.org/F/phnx47-beta/api/v2/package
-  api_key:
-    secure: Smuwoi47XyX6b6x66VpPnnL96F3cl1nukALrFnZo1Oony38dzouByG7pnt6DX4HT
-  symbol_server: https://www.myget.org/F/phnx47-beta/symbols/api/v2/package
-  artifact: MyGet
-  on:
-    branch: master
-    appveyor_repo_tag: false
+  - provider: NuGet
+    server: https://www.myget.org/F/prometheus-client-net/api/v2/package
+    api_key:
+      secure: DvXZQgy0wcMjR87Zt1qBB9YaDmEiAAiylRxVFfnvkYmfD+oYUetgCi1B036DJZGF
+    symbol_server: https://www.myget.org/F/prometheus-client-net/symbols/api/v2/package
+    artifact: MyGet
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: false 

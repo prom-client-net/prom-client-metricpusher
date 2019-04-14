@@ -3,10 +3,9 @@
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
     <Copyright>2019 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>1.0.0-rc1</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.3;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">net45;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.2</TargetFrameworks>
     <PackageId>Prometheus.Client.MetricPusher</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
     <PackageIconUrl>https://image.ibb.co/k4Sc0k/prometheus.png</PackageIconUrl>
@@ -19,10 +18,7 @@
   <PropertyGroup>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="[2.0.0,3.0.0)" />
+    <PackageReference Include="Prometheus.Client" Version="3.0.0-rc2" />
   </ItemGroup>
 </Project>
