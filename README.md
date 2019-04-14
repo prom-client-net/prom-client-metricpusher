@@ -1,6 +1,6 @@
 # Prometheus.Client.MetricPusher
 
-[![MyGet](https://img.shields.io/myget/phnx47-beta/vpre/Prometheus.Client.MetricPusher.svg)](https://www.myget.org/feed/phnx47-beta/package/nuget/Prometheus.Client.MetricPusher)
+[![MyGet](https://img.shields.io/myget/prometheus-client-net/vpre/Prometheus.Client.MetricPusher.svg?label=myget)](https://www.myget.org/feed/prometheus-client-net/package/nuget/Prometheus.Client.MetricPusher)
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.MetricPusher.svg)](https://www.nuget.org/packages/Prometheus.Client.MetricPusher)
 [![NuGet](https://img.shields.io/nuget/dt/Prometheus.Client.MetricPusher.svg)](https://www.nuget.org/packages/Prometheus.Client.MetricPusher)
 
