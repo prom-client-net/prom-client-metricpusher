@@ -21,6 +21,6 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="3.0.0-rc2" />
+    <PackageReference Include="Prometheus.Client" Version="3.0.0" />
   </ItemGroup>
 </Project>
