@@ -3,12 +3,12 @@
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
     <Copyright>2019 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.2;netstandard2.1</TargetFrameworks>
     <PackageId>Prometheus.Client.MetricPusher</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
-    <PackageIconUrl>https://image.ibb.co/k4Sc0k/prometheus.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -21,6 +21,13 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="3.0.1" />
+    <None Include="../../icon.png">
+      <Pack>true</Pack>
+      <Visible>false</Visible>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prometheus.Client" Version="[3.1.0,4.0.0)" />
   </ItemGroup>
 </Project>
