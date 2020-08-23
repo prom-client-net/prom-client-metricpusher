@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
-    <Copyright>2019 © Sergey Kuznetsov</Copyright>
+    <Copyright>2020 © Serge K, Oleksandr Poliakov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <Authors>Sergey Kuznetsov</Authors>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.2;netstandard2.1</TargetFrameworks>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <Authors>Serge K, Oleksandr Poliakov</Authors>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.2;netstandard2.1</TargetFrameworks>
     <PackageId>Prometheus.Client.MetricPusher</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
@@ -16,6 +16,9 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../Prometheus.Client.MetricPusher.snk</AssemblyOriginatorKeyFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>1591</NoWarn>
@@ -27,11 +30,8 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
-  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="[3.1.0,4.0.0)" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Prometheus.Client" Version="4.1.0" />
   </ItemGroup>
 </Project>

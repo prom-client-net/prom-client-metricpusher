@@ -76,13 +76,13 @@ namespace Prometheus.Client.MetricPusher
                         await Task.Delay(_pushInterval, _cts.Token);
                     }
                 }, _cts.Token));
-                   
+
                 await Task.WhenAll(innerTasks);
             }, _cts.Token);
         }
 
         protected virtual void OnPushError(IMetricPusher metricPusher, Exception exception)
-        {            
+        {
         }
     }
 }
