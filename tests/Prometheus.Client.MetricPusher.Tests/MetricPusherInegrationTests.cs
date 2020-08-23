@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Prometheus.Client.Abstractions;
+using Prometheus.Client.Collectors;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,16 +15,18 @@ namespace Prometheus.Client.MetricPusher.Tests
     public class MetricPusherTests
     {
         private readonly ITestOutputHelper _output;
+        private readonly IMetricFactory _metricFactory;
 
         public MetricPusherTests(ITestOutputHelper output)
         {
             _output = output;
+            _metricFactory = new MetricFactory(new CollectorRegistry());
         }
 
         [Fact]
         public async Task Simple_Push()
         {
-            var counter = Metrics.CreateCounter("test_c12", "help");
+            var counter = _metricFactory.CreateCounter("test_c12", "help");
             counter.Inc();
 
             var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance");
@@ -32,7 +36,7 @@ namespace Prometheus.Client.MetricPusher.Tests
         [Fact]
         public async Task Auth_Puth()
         {
-            var counter = Metrics.CreateCounter("test_", "help");
+            var counter = _metricFactory.CreateCounter("test_", "help");
             counter.Inc();
 
             const string accessToken = "";
@@ -46,7 +50,7 @@ namespace Prometheus.Client.MetricPusher.Tests
         [Fact]
         public async Task Worker_10Step()
         {
-            var counter = Metrics.CreateCounter("worker_counter1", "help");
+            var counter = _metricFactory.CreateCounter("worker_counter1", "help");
             var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker");
 
             var worker = new MetricPushServer(pusher);
