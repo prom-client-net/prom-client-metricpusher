@@ -10,10 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
 		LICENSE = LICENSE
 		README.md = README.md
-		pack.sh = pack.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher\Prometheus.Client.MetricPusher.csproj", "{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}"

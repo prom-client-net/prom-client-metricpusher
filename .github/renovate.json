@@ -1,0 +1,15 @@
+{
+  "separateMajorMinor": true,
+  "labels": [
+    "dependencies"
+  ],
+  "assignees": [
+    "@phnx47"
+  ],
+  "extends": [
+    "config:base"
+  ],
+  "nuget": {
+    "enabled": true
+  }
+}

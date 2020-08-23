@@ -1,0 +1,28 @@
+name: "CI"
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build -c Release
+      - name: Pack artifacts
+        run: dotnet pack src/* -c Release --no-build -o artifacts/
+      - name: Publish artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nupkg
+          path: artifacts/*
+      - name: Publish to NuGet
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
