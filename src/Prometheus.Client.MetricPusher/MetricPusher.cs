@@ -35,7 +35,7 @@ namespace Prometheus.Client.MetricPusher
             : this(endpoint, job, null, labels, null)
         {
         }
-        
+
         public MetricPusher(string endpoint, string job, string instance, Dictionary<string, string> additionalHeaders)
             : this(endpoint, job, instance, null, additionalHeaders)
         {
@@ -86,12 +86,16 @@ namespace Prometheus.Client.MetricPusher
             }
 
             if (labels != null)
+            {
                 foreach (var pair in labels.Where(l => !string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
+                {
                     stringBuilder
                         .Append("/")
                         .Append(pair.Key)
                         .Append("/")
                         .Append(pair.Value);
+                }
+            }
 
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
                 throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
@@ -100,6 +104,7 @@ namespace Prometheus.Client.MetricPusher
 
             _httpClient = new HttpClient();
             if (additionalHeaders != null)
+            {
                 foreach (var header in additionalHeaders)
                 {
                     _httpClient.DefaultRequestHeaders.Add(
@@ -107,6 +112,7 @@ namespace Prometheus.Client.MetricPusher
                         header.Value
                     );
                 }
+            }
         }
 
         /// <inheritdoc />

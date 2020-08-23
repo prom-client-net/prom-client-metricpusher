@@ -8,12 +8,12 @@
         bool IsRunning { get; }
 
         /// <summary>
-        ///     Start Metric Push Server 
+        ///     Start Metric Push Server
         /// </summary>
         void Start();
 
         /// <summary>
-        ///     Stop Metric Push Server 
+        ///     Stop Metric Push Server
         /// </summary>
         void Stop();
     }
