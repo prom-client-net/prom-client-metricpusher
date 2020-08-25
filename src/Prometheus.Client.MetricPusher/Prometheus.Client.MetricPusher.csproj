@@ -3,7 +3,7 @@
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
     <Copyright>2020 © Serge K, Oleksandr Poliakov</Copyright>
     <AssemblyTitle>Prometheus.Client.MetricPusher</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>2.0.1</VersionPrefix>
     <Authors>Serge K, Oleksandr Poliakov</Authors>
     <TargetFrameworks>netstandard2.0;netcoreapp2.2;netstandard2.1</TargetFrameworks>
     <PackageId>Prometheus.Client.MetricPusher</PackageId>

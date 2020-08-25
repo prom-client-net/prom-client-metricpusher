@@ -1,10 +1,8 @@
 # Prometheus.Client.MetricPusher
 
-[![MyGet](https://img.shields.io/myget/prometheus-client-net/vpre/Prometheus.Client.MetricPusher.svg?label=myget)](https://www.myget.org/feed/prometheus-client-net/package/nuget/Prometheus.Client.MetricPusher)
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.MetricPusher.svg)](https://www.nuget.org/packages/Prometheus.Client.MetricPusher)
 [![NuGet](https://img.shields.io/nuget/dt/Prometheus.Client.MetricPusher.svg)](https://www.nuget.org/packages/Prometheus.Client.MetricPusher)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/46twv9kokpnv6952?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-metricpusher)
+[![CI](https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher/workflows/CI/badge.svg)](https://github.com/PrometheusClientNet/Prometheus.Client.MetricPusher/actions?query=workflow%3ACI)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## PushGateaway
@@ -59,7 +57,11 @@ Contributions to the package are always welcome!
 
 ## Support
 
-If you are having problems, send a mail to [prometheus@phnx47.net](mailto://prometheus@phnx47.net). I will try to help you.K
+I would also very much appreciate your support:
+
+<a href="https://www.buymeacoffee.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/bmac0.png" alt="Buy Me A Coffee"></a>
+<a href="https://ko-fi.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/kofi0.png" alt="Support me on ko-fi"></a>
+<a href="https://www.patreon.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/patreon0.png" alt="Support me on Patreon"></a>
 
 ## License
 
