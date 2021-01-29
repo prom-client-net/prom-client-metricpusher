@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Prometheus.Client.Abstractions;
 using Prometheus.Client.Collectors;
 using Xunit;
 using Xunit.Abstractions;

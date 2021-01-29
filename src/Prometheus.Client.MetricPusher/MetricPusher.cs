@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
-using Prometheus.Client.Collectors.Abstractions;
 
 namespace Prometheus.Client.MetricPusher
 {
