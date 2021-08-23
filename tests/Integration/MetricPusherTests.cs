@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Prometheus.Client.MetricPusher.Tests
+namespace Prometheus.Client.MetricPusher.Tests.Integration
 {
     // Need Environment
     // https://github.com/prometheus/pushgateway
 
-    [Category("Integration")]
     public class MetricPusherTests
     {
         private readonly ITestOutputHelper _output;
@@ -41,10 +39,7 @@ namespace Prometheus.Client.MetricPusher.Tests
             counter.Inc();
 
             const string accessToken = "";
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance", new Dictionary<string, string>
-            {
-                { "Authorization", "Bearer " + accessToken }
-            });
+            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance", new Dictionary<string, string> { { "Authorization", "Bearer " + accessToken } });
             await pusher.PushAsync();
         }
 
