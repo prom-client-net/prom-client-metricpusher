@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
@@ -11,6 +12,7 @@ namespace Prometheus.Client.MetricPusher.Tests
     // Need Environment
     // https://github.com/prometheus/pushgateway
 
+    [Category("Integration")]
     public class MetricPusherTests
     {
         private readonly ITestOutputHelper _output;
