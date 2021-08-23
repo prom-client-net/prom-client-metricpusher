@@ -14,11 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{285A8931-C
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher\Prometheus.Client.MetricPusher.csproj", "{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{868CBF44-EBF0-4E33-B650-F2AB1B11F199}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher.Tests", "tests\Prometheus.Client.MetricPusher.Tests\Prometheus.Client.MetricPusher.Tests.csproj", "{8809D655-B7F7-466C-A97B-08E23C4F220B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A6066874-A972-4999-BB9B-43FDD99D1655}"
 ProjectSection(SolutionItems) = preProject
@@ -34,29 +30,33 @@ ProjectSection(SolutionItems) = preProject
 	.github\workflows\production.yml = .github\workflows\production.yml
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher.csproj", "{6029CA00-941F-4250-B9DF-9975062F8F7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher.Tests", "tests\Prometheus.Client.MetricPusher.Tests.csproj", "{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8809D655-B7F7-466C-A97B-08E23C4F220B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8809D655-B7F7-466C-A97B-08E23C4F220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8809D655-B7F7-466C-A97B-08E23C4F220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8809D655-B7F7-466C-A97B-08E23C4F220B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6029CA00-941F-4250-B9DF-9975062F8F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6029CA00-941F-4250-B9DF-9975062F8F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6029CA00-941F-4250-B9DF-9975062F8F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6029CA00-941F-4250-B9DF-9975062F8F7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E95C306F-CE81-43A9-BC91-41DA29FEE1AD} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
-		{8809D655-B7F7-466C-A97B-08E23C4F220B} = {868CBF44-EBF0-4E33-B650-F2AB1B11F199}
 		{A6066874-A972-4999-BB9B-43FDD99D1655} = {285A8931-C09A-482E-9EF3-D90AA616A0FD}
 		{C146BB8A-8C80-4249-A600-970FE483EEB9} = {A6066874-A972-4999-BB9B-43FDD99D1655}
+		{6029CA00-941F-4250-B9DF-9975062F8F7F} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
+		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2} = {868CBF44-EBF0-4E33-B650-F2AB1B11F199}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}

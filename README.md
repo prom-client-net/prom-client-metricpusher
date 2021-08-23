@@ -5,9 +5,9 @@
 [![CI](https://img.shields.io/github/workflow/status/prom-client-net/prom-client-metricpusher/%F0%9F%92%BF%20CI%20Master?label=CI&logo=github)](https://github.com/prom-client-net/prom-client-metricpusher/actions/workflows/master.yml)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
-## Pushgateway
+## PushGateaway
 
-Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to Pushgateway server that you can install from [here](https://github.com/prometheus/pushgateway/releases "here").
+Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to PushGateaway server that you can install from [here](https://github.com/prometheus/pushgateway/releases).
 
 ## Installation
 
@@ -23,7 +23,7 @@ One push. You can use Timer for regularly push to PushGateway:
 
 ```c#
 var pusher = new MetricPusher("http://localhost:9091", "pushgateway", "instance"); 
-await pusher. PushAsync(); 
+await pusher.PushAsync(); 
 
 ```
 
@@ -42,9 +42,9 @@ Background server:
 var pusher = new MetricPusher("http://localhost:9091", "pushgateway"); 
 
 var worker = new MetricPushServer(pusher); 
-worker. Start(); 
+worker.Start(); 
 ...
-worker. Stop(); 
+worker.Stop(); 
 
 ```
 
