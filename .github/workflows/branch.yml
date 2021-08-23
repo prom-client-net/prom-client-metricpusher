@@ -20,6 +20,6 @@ jobs:
       - name: ⚙ Restore
         run: dotnet restore
       - name: 🏭 Build
-        run: dotnet build --no-restore -c Release
+        run: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
       - name: 🧪 Tests
         run: dotnet test --no-build -c Release --filter FullyQualifiedName\!~Tests.Integration
