@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{285A8931-C
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{868CBF44-EBF0-4E33-B650-F2AB1B11F199}"
