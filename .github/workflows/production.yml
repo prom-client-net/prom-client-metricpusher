@@ -19,7 +19,7 @@ jobs:
       - name: 🏭 Build
         run: dotnet build --no-restore -c Release
       - name: 🧪 Tests
-        run: dotnet test --no-build -c Release
+        run: dotnet test --no-build -c Release --filter FullyQualifiedName\!~Tests.Integration
       - name: 🗜 Pack artifacts
         run: dotnet pack src -c Release --no-build -o artifacts/
       - name: 🗄 Publish artifacts
