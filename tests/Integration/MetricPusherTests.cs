@@ -28,7 +28,7 @@ namespace Prometheus.Client.MetricPusher.Tests.Integration
             var counter = _metricFactory.CreateCounter("test_c12", "help");
             counter.Inc();
 
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance");
+            var pusher = new MetricPusher(new MetricPusherOptions { Endpoint = "http://localhost:9091", Job = "pushgateway-test", Instance = "instance" });
             await pusher.PushAsync();
         }
 
@@ -39,7 +39,13 @@ namespace Prometheus.Client.MetricPusher.Tests.Integration
             counter.Inc();
 
             const string accessToken = "";
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-test", "instance", new Dictionary<string, string> { { "Authorization", "Bearer " + accessToken } });
+            var pusher = new MetricPusher(new MetricPusherOptions
+            {
+                Endpoint = "http://localhost:9091",
+                Job = "pushgateway-test",
+                Instance = "instance",
+                AdditionalHeaders = new Dictionary<string, string> { { "Authorization", "Bearer " + accessToken } }
+            });
             await pusher.PushAsync();
         }
 
@@ -47,7 +53,7 @@ namespace Prometheus.Client.MetricPusher.Tests.Integration
         public async Task Worker_10Step()
         {
             var counter = _metricFactory.CreateCounter("worker_counter1", "help");
-            var pusher = new MetricPusher("http://localhost:9091", "pushgateway-testworker");
+            var pusher = new MetricPusher(new MetricPusherOptions { Endpoint = "http://localhost:9091", Job = "pushgateway-testworker" });
 
             var worker = new MetricPushServer(pusher);
             worker.Start();
