@@ -33,10 +33,8 @@ namespace Prometheus.Client.MetricPusher
             _pushInterval = pushInterval;
         }
 
-        /// <inheritdoc />
         public bool IsRunning => _task != null;
 
-        /// <inheritdoc />
         public void Start()
         {
             if (IsRunning)
@@ -46,7 +44,6 @@ namespace Prometheus.Client.MetricPusher
             _task = Run();
         }
 
-        /// <inheritdoc />
         public void Stop()
         {
             if (!IsRunning)

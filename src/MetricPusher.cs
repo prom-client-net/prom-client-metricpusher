@@ -8,86 +8,92 @@ using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher
 {
-    /// <inheritdoc />
     public class MetricPusher : IMetricPusher
     {
         private readonly HttpClient _httpClient;
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(string endpoint, string job)
             : this(endpoint, job, instance: null)
         {
         }
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(string endpoint, string job, string instance)
             : this(endpoint, job, instance, null, null)
         {
         }
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(string endpoint, string job, Dictionary<string, string> additionalHeaders)
             : this(endpoint, job, null, null, additionalHeaders)
         {
         }
 
-        public MetricPusher(string endpoint, string job,IEnumerable<KeyValuePair<string, string>> labels)
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
+        public MetricPusher(string endpoint, string job, IEnumerable<KeyValuePair<string, string>> labels)
             : this(endpoint, job, null, labels, null)
         {
         }
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(string endpoint, string job, string instance, Dictionary<string, string> additionalHeaders)
             : this(endpoint, job, instance, null, additionalHeaders)
         {
         }
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(string endpoint, string job, string instance, IEnumerable<KeyValuePair<string, string>> labels)
             : this(endpoint, job, instance, labels, null)
         {
         }
 
+        [Obsolete("Use new MetricPusher(MetricPusherOptions options).")]
         public MetricPusher(
             string endpoint,
             string job,
             string instance,
             IEnumerable<KeyValuePair<string, string>> labels,
             Dictionary<string, string> additionalHeaders)
-            : this(null, endpoint, job, instance, labels, additionalHeaders, null)
+            : this(new MetricPusherOptions
+            {
+                Endpoint = endpoint,
+                Job = job,
+                Instance = instance,
+                AdditionalLabels = labels,
+                AdditionalHeaders = additionalHeaders
+            })
         {
         }
 
-        public MetricPusher(
-            ICollectorRegistry collectorRegistry,
-            string endpoint,
-            string job,
-            string instance,
-            IEnumerable<KeyValuePair<string, string>> labels,
-            Dictionary<string, string> additionalHeaders,
-            HttpClient httpClient)
+        public MetricPusher(MetricPusherOptions options)
         {
-            if (string.IsNullOrEmpty(job))
-                throw new ArgumentNullException(nameof(job));
+            if (string.IsNullOrEmpty(options.Job))
+                throw new ArgumentNullException(nameof(options.Job));
 
-            if (string.IsNullOrEmpty(endpoint))
-                throw new ArgumentNullException(nameof(endpoint));
+            if (string.IsNullOrEmpty(options.Endpoint))
+                throw new ArgumentNullException(nameof(options.Endpoint));
 
-            var stringBuilder = new StringBuilder(endpoint);
-            if (!endpoint.EndsWith("/"))
+            var stringBuilder = new StringBuilder(options.Endpoint);
+            if (!options.Endpoint.EndsWith("/"))
                 stringBuilder.Append("/");
 
             stringBuilder
                 .Append("metrics/job/")
-                .Append(job);
+                .Append(options.Job);
 
-            if (!string.IsNullOrEmpty(instance))
+            if (!string.IsNullOrEmpty(options.Instance))
             {
                 stringBuilder
                     .Append("/instance/")
-                    .Append(instance);
+                    .Append(options.Instance);
             }
 
-            if (labels != null)
+            if (options.AdditionalLabels != null)
             {
-                foreach (var pair in labels.Where(l => !string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
+                foreach (var pair in options.AdditionalLabels.Where(l => !string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
                 {
                     stringBuilder
                         .Append("/")
@@ -98,14 +104,14 @@ namespace Prometheus.Client.MetricPusher
             }
 
             if (!Uri.TryCreate(stringBuilder.ToString(), UriKind.Absolute, out _targetUri))
-                throw new ArgumentException("Endpoint must be a valid url", nameof(endpoint));
+                throw new ArgumentException("Endpoint must be a valid url", nameof(options.Endpoint));
 
-            _collectorRegistry = collectorRegistry ?? Metrics.DefaultCollectorRegistry;
+            _collectorRegistry = options.CollectorRegistry ?? Metrics.DefaultCollectorRegistry;
 
-            _httpClient = httpClient ?? new HttpClient();
-            if (additionalHeaders != null)
+            _httpClient = options.HttpClient ?? new HttpClient();
+            if (options.AdditionalHeaders != null)
             {
-                foreach (var header in additionalHeaders)
+                foreach (var header in options.AdditionalHeaders)
                 {
                     _httpClient.DefaultRequestHeaders.Add(
                         header.Key,
@@ -115,7 +121,6 @@ namespace Prometheus.Client.MetricPusher
             }
         }
 
-        /// <inheritdoc />
         public async Task PushAsync()
         {
             var memoryStream = await ScrapeHandler.ProcessAsync(_collectorRegistry);
