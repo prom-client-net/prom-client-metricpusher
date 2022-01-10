@@ -51,7 +51,7 @@ namespace Prometheus.Client.MetricPusher
             string instance,
             IEnumerable<KeyValuePair<string, string>> labels,
             Dictionary<string, string> additionalHeaders)
-            : this(null, endpoint, job, instance, labels, additionalHeaders)
+            : this(null, endpoint, job, instance, labels, additionalHeaders, null)
         {
         }
 
@@ -61,7 +61,8 @@ namespace Prometheus.Client.MetricPusher
             string job,
             string instance,
             IEnumerable<KeyValuePair<string, string>> labels,
-            Dictionary<string, string> additionalHeaders)
+            Dictionary<string, string> additionalHeaders,
+            HttpClient httpClient)
         {
             if (string.IsNullOrEmpty(job))
                 throw new ArgumentNullException(nameof(job));
@@ -101,7 +102,7 @@ namespace Prometheus.Client.MetricPusher
 
             _collectorRegistry = collectorRegistry ?? Metrics.DefaultCollectorRegistry;
 
-            _httpClient = new HttpClient();
+            _httpClient = httpClient ?? new HttpClient();
             if (additionalHeaders != null)
             {
                 foreach (var header in additionalHeaders)
