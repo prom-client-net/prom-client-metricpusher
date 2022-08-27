@@ -17,7 +17,7 @@ dotnet add package Prometheus.Client.MetricPusher
 
 ## Quick start
 
-[Examples](https://github.com/prom-client-net/prom-examples/tree/master/MetricPusher)
+[Examples](https://github.com/prom-client-net/prom-examples)
 
 One push. You can use Timer for regularly push to PushGateway:
 
