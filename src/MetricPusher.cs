@@ -7,7 +7,7 @@ using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher
 {
-    public class MetricPusher : IMetricPusher
+    public class MetricPusher : IMetricPusher, IDisposable
     {
         private readonly HttpClient _httpClient;
         private readonly bool _isOwnHttpClient;
