@@ -55,24 +55,38 @@ namespace Prometheus.Client.MetricPusher
 
         private Task Run()
         {
+            async Task DoPushAsync(IMetricPusher pusher)
+            {
+                try
+                {
+                    await pusher.PushAsync();
+                }
+                catch (Exception ex)
+                {
+                    OnPushError(pusher, ex);
+                }
+            }
+
             return Task.Run(async () =>
             {
                 var innerTasks = _metricPushers.Select(metricPusher => Task.Run(async () =>
                 {
-                    while (true)
+                    while (!_cts.IsCancellationRequested)
                     {
+                        await DoPushAsync(metricPusher);
+
                         try
                         {
-                            await metricPusher.PushAsync();
+                            await Task.Delay(_pushInterval, _cts.Token);
                         }
-                        catch (Exception ex)
+                        catch (TaskCanceledException)
                         {
-                            OnPushError(metricPusher, ex);
                         }
-
-                        await Task.Delay(_pushInterval, _cts.Token);
                     }
-                }, _cts.Token));
+
+                    // Push the very last metric values before exit
+                    await DoPushAsync(metricPusher);
+                }));
 
                 await Task.WhenAll(innerTasks);
             }, _cts.Token);

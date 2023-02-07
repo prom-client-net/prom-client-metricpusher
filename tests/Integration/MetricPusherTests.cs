@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using NSubstitute;
 using Prometheus.Client.Collectors;
 using Xunit;
 using Xunit.Abstractions;
@@ -80,14 +80,16 @@ namespace Prometheus.Client.MetricPusher.Tests.Integration
         }
 
         [Fact]
-        public void TestPushContinuesOnError()
+        public async Task TestPushContinuesOnError()
         {
-            var pusher = new TestPusher(() => throw new Exception("Push error"));
+            var pusher = Substitute.For<IMetricPusher>();
+            pusher.PushAsync().Returns(Task.FromException(new Exception("Push error")));
 
             var worker = new MetricPushServer(pusher, TimeSpan.FromSeconds(0.05));
             worker.Start();
-            Thread.Sleep(150);
-            Assert.Equal(3, pusher.PushCounter);
+            await Task.Delay(150);
+
+            await pusher.Received(3).PushAsync();
             worker.Stop();
         }
     }
