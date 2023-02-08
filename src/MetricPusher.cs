@@ -7,9 +7,10 @@ using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher
 {
-    public class MetricPusher : IMetricPusher
+    public class MetricPusher : IMetricPusher, IDisposable
     {
         private readonly HttpClient _httpClient;
+        private readonly bool _isOwnHttpClient;
         private readonly ICollectorRegistry _collectorRegistry;
         private readonly Uri _targetUri;
 
@@ -54,6 +55,7 @@ namespace Prometheus.Client.MetricPusher
             _collectorRegistry = options.CollectorRegistry ?? Metrics.DefaultCollectorRegistry;
 
             _httpClient = options.HttpClient ?? new HttpClient();
+            _isOwnHttpClient = options.HttpClient == null;
             if (options.AdditionalHeaders != null)
             {
                 foreach (var header in options.AdditionalHeaders)
@@ -72,6 +74,12 @@ namespace Prometheus.Client.MetricPusher
             var response = await _httpClient.PostAsync(_targetUri, new StreamContent(memoryStream));
             response.EnsureSuccessStatusCode();
             memoryStream.Dispose();
+        }
+
+        public void Dispose()
+        {
+            if(_isOwnHttpClient)
+                _httpClient?.Dispose();
         }
     }
 }
