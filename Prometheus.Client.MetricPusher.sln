@@ -23,14 +23,13 @@ ProjectSection(SolutionItems) = preProject
 	.github\CODEOWNERS = .github\CODEOWNERS
 	.github\FUNDING.yml = .github\FUNDING.yml
 	.github\renovate.json = .github\renovate.json
+	.github\settings.yml = .github\settings.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C146BB8A-8C80-4249-A600-970FE483EEB9}"
-ProjectSection(SolutionItems) = preProject
-	.github\workflows\master.yml = .github\workflows\master.yml
-	.github\workflows\pr.yml = .github\workflows\pr.yml
-	.github\workflows\prod.yml = .github\workflows\prod.yml
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher.csproj", "{6029CA00-941F-4250-B9DF-9975062F8F7F}"
 EndProject
