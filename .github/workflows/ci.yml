@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nupkgs
-          path: src/**/*.[s]nupkg
+          path: src/**/*nupkg
 
   github:
     name: 🚀 Deploy to GitHub
@@ -58,7 +58,7 @@ jobs:
       - name: 📥 Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: nupkg
+          name: nupkgs
       - name: 📦 Push to pkg.github.com
         run: dotnet nuget push "*.nupkg" -s https://nuget.pkg.github.com/prom-client-net/index.json -k ${{ secrets.GH_FULL_PAT }} --skip-duplicate
   nuget:
@@ -70,6 +70,6 @@ jobs:
       - name: 📥 Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: nupkg
+          name: nupkgs
       - name: 📦 Push to nuget.org
         run: dotnet nuget push "*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_DEPLOY_KEY }}
