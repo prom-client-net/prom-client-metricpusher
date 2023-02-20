@@ -59,9 +59,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: nupkgs
-      - name: ls -a nupkgs
-        run: ls -a nupkgs
       - name: 📦 Push to pkg.github.com
+        working-directory: nupkgs
         run: dotnet nuget push "*.nupkg" -s https://nuget.pkg.github.com/prom-client-net/index.json -k ${{ secrets.GH_FULL_PAT }} --skip-duplicate
   nuget:
     name: 🚀 Deploy to NuGet
@@ -74,4 +73,5 @@ jobs:
         with:
           name: nupkgs
       - name: 📦 Push to nuget.org
+        working-directory: nupkgs
         run: dotnet nuget push "*.nupkg" -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_DEPLOY_KEY }}
