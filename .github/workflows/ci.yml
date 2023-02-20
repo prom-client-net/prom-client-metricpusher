@@ -59,6 +59,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: nupkgs
+      - name: ls -a
+        run: ls -a
       - name: 📦 Push to pkg.github.com
         run: dotnet nuget push "*.nupkg" -s https://nuget.pkg.github.com/prom-client-net/index.json -k ${{ secrets.GH_FULL_PAT }} --skip-duplicate
   nuget:
