@@ -3,15 +3,9 @@
     <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
     <VersionPrefix>3.1.0</VersionPrefix>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <PackageId>Prometheus.Client.MetricPusher</PackageId>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RepositoryUrl>https://github.com/prom-client-net/prom-client-metricpusher</RepositoryUrl>
-    <AssemblyOriginatorKeyFile>../Prometheus.Client.MetricPusher.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="../icon.png" Visible="false" Pack="true" PackagePath="" />
-    <None Include="../README.md" Visible="false"  Pack="true" PackagePath="" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Prometheus.Client" Version="[5.2.0,6.0.0)" />
   </ItemGroup>
