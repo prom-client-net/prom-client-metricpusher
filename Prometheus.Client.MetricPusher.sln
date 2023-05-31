@@ -3,34 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B922FA4B-1584-4EA7-8656-F9034FB45F9D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{285A8931-C09A-482E-9EF3-D90AA616A0FD}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
-		LICENSE = LICENSE
-		README.md = README.md
-		Directory.Build.props = Directory.Build.props
-		stylecop.json = stylecop.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{868CBF44-EBF0-4E33-B650-F2AB1B11F199}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A6066874-A972-4999-BB9B-43FDD99D1655}"
-ProjectSection(SolutionItems) = preProject
-	.github\CODEOWNERS = .github\CODEOWNERS
-	.github\FUNDING.yml = .github\FUNDING.yml
-	.github\renovate.json = .github\renovate.json
-	.github\settings.yml = .github\settings.yml
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C146BB8A-8C80-4249-A600-970FE483EEB9}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\ci.yml = .github\workflows\ci.yml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher", "src\Prometheus.Client.MetricPusher.csproj", "{6029CA00-941F-4250-B9DF-9975062F8F7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.MetricPusher.Tests", "tests\Prometheus.Client.MetricPusher.Tests.csproj", "{6796BD4D-6159-4EB1-8FCF-A805F9493ED2}"
@@ -54,10 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A6066874-A972-4999-BB9B-43FDD99D1655} = {285A8931-C09A-482E-9EF3-D90AA616A0FD}
-		{C146BB8A-8C80-4249-A600-970FE483EEB9} = {A6066874-A972-4999-BB9B-43FDD99D1655}
-		{6029CA00-941F-4250-B9DF-9975062F8F7F} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
-		{6796BD4D-6159-4EB1-8FCF-A805F9493ED2} = {868CBF44-EBF0-4E33-B650-F2AB1B11F199}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}
