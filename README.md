@@ -23,9 +23,14 @@ dotnet add package Prometheus.Client.MetricPusher
 One push. You can use Timer for regularly push to PushGateway:
 
 ```c#
-var pusher = new MetricPusher(new MetricPusherOptions { Endpoint = "http://localhost:9091", Job = "pushgateway", Instance = "instance" });
-await pusher.PushAsync();
+var pusher = new MetricPusher(new MetricPusherOptions
+{
+    Endpoint = "http://localhost:9091",
+    Job = "pushgateway",
+    Instance = "instance"
+});
 
+await pusher.PushAsync();
 ```
 
 Push with Auth:
@@ -43,13 +48,16 @@ var pusher = new MetricPusher(new MetricPusherOptions
 Background server:
 
 ```c#
-var pusher = new MetricPusher(new MetricPusherOptions { Endpoint = "http://localhost:9091", Job = "pushgateway" });
+var pusher = new MetricPusher(new MetricPusherOptions
+{
+    Endpoint = "http://localhost:9091",
+    Job = "pushgateway"
+});
 
 var worker = new MetricPushServer(pusher);
 worker.Start();
-...
+// code
 worker.Stop();
-
 ```
 
 ## Contribute
