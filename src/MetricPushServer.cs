@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace Prometheus.Client.MetricPusher;
 
-public class MetricPushServer : IMetricPushServer
+public class MetricPushServer(IMetricPusher[] metricPushers, TimeSpan pushInterval) : IMetricPushServer
 {
-    private readonly IMetricPusher[] _metricPushers;
-    private readonly TimeSpan _pushInterval;
     private CancellationTokenSource _cts;
     private Task _task;
 
@@ -25,12 +23,6 @@ public class MetricPushServer : IMetricPushServer
     public MetricPushServer(IMetricPusher[] metricPushers)
         : this(metricPushers, TimeSpan.FromMilliseconds(1000))
     {
-    }
-
-    public MetricPushServer(IMetricPusher[] metricPushers, TimeSpan pushInterval)
-    {
-        _metricPushers = metricPushers;
-        _pushInterval = pushInterval;
     }
 
     public bool IsRunning => _task != null;
@@ -69,7 +61,7 @@ public class MetricPushServer : IMetricPushServer
 
         return Task.Run(async () =>
         {
-            var innerTasks = _metricPushers.Select(metricPusher => Task.Run(async () =>
+            var innerTasks = metricPushers.Select(metricPusher => Task.Run(async () =>
             {
                 while (!_cts.IsCancellationRequested)
                 {
@@ -77,7 +69,7 @@ public class MetricPushServer : IMetricPushServer
 
                     try
                     {
-                        await Task.Delay(_pushInterval, _cts.Token);
+                        await Task.Delay(pushInterval, _cts.Token);
                     }
                     catch (TaskCanceledException)
                     {
