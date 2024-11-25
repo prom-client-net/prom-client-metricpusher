@@ -13,12 +13,12 @@ public class MetricPushServer : IMetricPushServer
     private Task _task;
 
     public MetricPushServer(IMetricPusher metricPusher)
-        : this(new[] { metricPusher })
+        : this([metricPusher])
     {
     }
 
     public MetricPushServer(IMetricPusher metricPusher, TimeSpan pushInterval)
-        : this(new[] { metricPusher }, pushInterval)
+        : this([metricPusher], pushInterval)
     {
     }
 

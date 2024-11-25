@@ -78,7 +78,7 @@ public class MetricPusher : IMetricPusher, IDisposable
 
     public void Dispose()
     {
-        if(_isOwnHttpClient)
+        if (_isOwnHttpClient)
             _httpClient?.Dispose();
     }
 }
