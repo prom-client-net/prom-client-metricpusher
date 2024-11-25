@@ -47,18 +47,6 @@ public class MetricPushServer(IMetricPusher[] metricPushers, TimeSpan pushInterv
 
     private Task Run()
     {
-        async Task DoPushAsync(IMetricPusher pusher)
-        {
-            try
-            {
-                await pusher.PushAsync();
-            }
-            catch (Exception ex)
-            {
-                OnPushError(pusher, ex);
-            }
-        }
-
         return Task.Run(async () =>
         {
             var innerTasks = metricPushers.Select(metricPusher => Task.Run(async () =>
@@ -82,6 +70,18 @@ public class MetricPushServer(IMetricPusher[] metricPushers, TimeSpan pushInterv
 
             await Task.WhenAll(innerTasks);
         }, _cts.Token);
+
+        async Task DoPushAsync(IMetricPusher pusher)
+        {
+            try
+            {
+                await pusher.PushAsync();
+            }
+            catch (Exception ex)
+            {
+                OnPushError(pusher, ex);
+            }
+        }
     }
 
     protected virtual void OnPushError(IMetricPusher metricPusher, Exception exception)
