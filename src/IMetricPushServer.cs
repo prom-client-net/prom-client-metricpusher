@@ -1,20 +1,19 @@
-﻿namespace Prometheus.Client.MetricPusher
+﻿namespace Prometheus.Client.MetricPusher;
+
+public interface IMetricPushServer
 {
-    public interface IMetricPushServer
-    {
-        /// <summary>
-        ///     Server is Running?
-        /// </summary>
-        bool IsRunning { get; }
+    /// <summary>
+    ///     Server is Running?
+    /// </summary>
+    bool IsRunning { get; }
 
-        /// <summary>
-        ///     Start Metric Push Server
-        /// </summary>
-        void Start();
+    /// <summary>
+    ///     Start Metric Push Server
+    /// </summary>
+    void Start();
 
-        /// <summary>
-        ///     Stop Metric Push Server
-        /// </summary>
-        void Stop();
-    }
+    /// <summary>
+    ///     Stop Metric Push Server
+    /// </summary>
+    void Stop();
 }
