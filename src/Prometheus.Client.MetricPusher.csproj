@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Push metrics to a PushGateaway for the Prometheus.Client</Description>
-    <VersionPrefix>3.1.0</VersionPrefix>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Description>Push metrics to PushGateaway for Prometheus.Client</Description>
+    <TargetFrameworks>net462;netstandard2.0;net6.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RepositoryUrl>https://github.com/prom-client-net/prom-client-metricpusher</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="[5.2.0,6.0.0)" />
+    <PackageReference Include="Prometheus.Client" Version="5.2.0" />
   </ItemGroup>
 </Project>
