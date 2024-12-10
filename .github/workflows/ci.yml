@@ -1,4 +1,4 @@
-name: CI Linux
+name: CI
 
 on:
   push:
@@ -12,6 +12,16 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-windows:
+    name: Build & Test (Windows)
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: dotnet test -c Release -p:CollectCoverage=false
+
   build-linux:
     name: Build, Test & Pack (Linux)
     runs-on: ubuntu-24.04
@@ -66,7 +76,7 @@ jobs:
 
   github:
     name: Deploy to GitHub
-    needs: [build-linux]
+    needs: [build-windows, build-linux]
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     steps:
@@ -79,7 +89,7 @@ jobs:
 
   nuget:
     name: Deploy to NuGet
-    needs: [build-linux]
+    needs: [build-windows, build-linux]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     steps:
