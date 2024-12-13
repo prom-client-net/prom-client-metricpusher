@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
+  build-win:
     name: Build & Test (Windows)
     runs-on: windows-2022
     steps:
