@@ -8,12 +8,12 @@ using Xunit.Abstractions;
 
 namespace Prometheus.Client.MetricPusher.Tests;
 
-public class MetricPusherTests(PushGatewayFixture fixture, ITestOutputHelper output) : IClassFixture<PushGatewayFixture>
+public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutputHelper output) : IClassFixture<PushGatewayFixture>
 {
     private readonly string _endpoint = fixture.GetEndpoint();
     private readonly IMetricFactory _metricFactory = new MetricFactory(new CollectorRegistry());
 
-    [Fact]
+    [IntegrationFact]
     public async Task PushWithoutException()
     {
         var counter = _metricFactory.CreateCounter("counter1", "help");
@@ -25,7 +25,7 @@ public class MetricPusherTests(PushGatewayFixture fixture, ITestOutputHelper out
         Assert.Null(ex);
     }
 
-    [Fact]
+    [IntegrationFact]
     public async Task PushToWrongUrlWithHttpRequestException()
     {
         var counter = _metricFactory.CreateCounter("counter2", "help");
@@ -37,7 +37,7 @@ public class MetricPusherTests(PushGatewayFixture fixture, ITestOutputHelper out
         Assert.IsType<HttpRequestException>(ex);
     }
 
-    [Fact]
+    [IntegrationFact]
     public async Task PushWithAdditionalHeadersWithoutException()
     {
         var counter = _metricFactory.CreateCounter("counter3", "help");
@@ -56,7 +56,7 @@ public class MetricPusherTests(PushGatewayFixture fixture, ITestOutputHelper out
         Assert.Null(ex);
     }
 
-    [Fact]
+    [IntegrationFact]
     public async Task Worker10StepsWithExpectedResult()
     {
         var counter = _metricFactory.CreateCounter("worker_counter1", "help");
