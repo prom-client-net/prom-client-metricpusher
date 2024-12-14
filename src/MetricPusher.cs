@@ -14,6 +14,8 @@ public class MetricPusher : IMetricPusher, IDisposable
     private readonly ICollectorRegistry _collectorRegistry;
     private readonly Uri _targetUri;
 
+    public Uri TargetUri => _targetUri;
+
     public MetricPusher(MetricPusherOptions options)
     {
         if (string.IsNullOrEmpty(options.Job))
@@ -24,7 +26,7 @@ public class MetricPusher : IMetricPusher, IDisposable
 
         var stringBuilder = new StringBuilder(options.Endpoint);
         if (!options.Endpoint.EndsWith("/"))
-            stringBuilder.Append("/");
+            stringBuilder.Append('/');
 
         stringBuilder
             .Append("metrics/job/")
@@ -42,9 +44,9 @@ public class MetricPusher : IMetricPusher, IDisposable
             foreach (var pair in options.AdditionalLabels.Where(l => !string.IsNullOrEmpty(l.Key) && !string.IsNullOrEmpty(l.Value)))
             {
                 stringBuilder
-                    .Append("/")
+                    .Append('/')
                     .Append(pair.Key)
-                    .Append("/")
+                    .Append('/')
                     .Append(pair.Value);
             }
         }

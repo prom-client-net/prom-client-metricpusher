@@ -14,7 +14,7 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
     private readonly IMetricFactory _metricFactory = new MetricFactory(new CollectorRegistry());
 
     [IntegrationFact]
-    public async Task PushWithoutException()
+    public async Task Push_WithValidOptions_DoesNotThrowException()
     {
         var counter = _metricFactory.CreateCounter("counter1", "help");
         counter.Inc();
@@ -26,7 +26,7 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
     }
 
     [IntegrationFact]
-    public async Task PushToWrongUrlWithHttpRequestException()
+    public async Task Push_ToWrongUrl_ThrowsHttpRequestException()
     {
         var counter = _metricFactory.CreateCounter("counter2", "help");
         counter.Inc();
@@ -38,7 +38,7 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
     }
 
     [IntegrationFact]
-    public async Task PushWithAdditionalHeadersWithoutException()
+    public async Task Push_WithAdditionalHeader_DoesNotThrowException()
     {
         var counter = _metricFactory.CreateCounter("counter3", "help");
         counter.Inc();
@@ -57,14 +57,14 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
     }
 
     [IntegrationFact]
-    public async Task Worker10StepsWithExpectedResult()
+    public async Task Worker_10Steps_ProducesCorrectOutput()
     {
         var counter = _metricFactory.CreateCounter("worker_counter1", "help");
         var pusher = new MetricPusher(new MetricPusherOptions { Endpoint = _endpoint, Job = "pushgateway-testworker" });
         var worker = new MetricPushServer(pusher);
 
-        var resultBuilder = new StringBuilder();
-        const string expectedResult = """
+        var outputBuilder = new StringBuilder();
+        const string expectedOutput = """
                                       Step: 0, IsRunning: True
                                       Step: 1, IsRunning: True
                                       Step: 2, IsRunning: True
@@ -83,7 +83,7 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
         for (int i = 0; i < 10; i++)
         {
             var info = $"Step: {i}, IsRunning: {worker.IsRunning}";
-            resultBuilder.AppendLine(info);
+            outputBuilder.AppendLine(info);
             output.WriteLine(info);
 
             counter.Inc();
@@ -101,7 +101,7 @@ public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutpu
             await Task.Delay(100);
         }
 
-        Assert.Equal(expectedResult, resultBuilder.ToString());
+        Assert.Equal(expectedOutput, outputBuilder.ToString());
 
         worker.Stop();
     }
