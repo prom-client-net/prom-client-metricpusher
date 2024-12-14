@@ -84,6 +84,7 @@ public class MetricPushServerTests
         await Task.Delay(1500);
 
         worker.Stop();
+        await Task.Delay(100);
 
         await pusher.Received(3).PushAsync(); // 2 + 1 (final push)
     }
