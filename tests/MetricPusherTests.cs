@@ -215,7 +215,6 @@ public class MetricPusherTests
         Assert.Contains("500", ex.Message);
     }
 
-
     [Fact]
     public async Task Dispose_WhenHttpClientIsProvided_DoesNotDisposeHttpClient()
     {
