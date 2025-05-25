@@ -6,9 +6,9 @@
 [![codecov](https://img.shields.io/codecov/c/github/prom-client-net/prom-client-metricpusher?logo=codecov&style=flat-square)](https://app.codecov.io/gh/prom-client-net/prom-client-metricpusher)
 [![license](https://img.shields.io/github/license/prom-client-net/prom-client-metricpusher?style=flat-square)](https://github.com/prom-client-net/prom-client-metricpusher/blob/main/LICENSE)
 
-## PushGateway
+## Pushgateway
 
-Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to PushGateaway server that you can install from [here](https://github.com/prometheus/pushgateway/releases).
+Sometimes when it is not possible to pull e.g. - nodes behind LB or there is a worker like daemon or windows service that does not have HTTP endpoint still there is way to push your metrics to Pushgateway server that you can install from [here](https://github.com/prometheus/pushgateway/releases).
 
 ## Install
 
@@ -20,7 +20,7 @@ dotnet add package Prometheus.Client.MetricPusher
 
 [Examples](https://github.com/prom-client-net/prom-examples)
 
-One push. You can use Timer for regularly push to PushGateway:
+One push. You can use Timer for regularly push to Pushgateway:
 
 ```c#
 var pusher = new MetricPusher(new MetricPusherOptions

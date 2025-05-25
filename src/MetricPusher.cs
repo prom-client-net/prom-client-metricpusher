@@ -7,6 +7,9 @@ using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.MetricPusher;
 
+/// <summary>
+/// Implementation of metric pusher for Prometheus Pushgateway.
+/// </summary>
 public class MetricPusher : IMetricPusher, IDisposable
 {
     private readonly HttpClient _httpClient;
@@ -14,6 +17,9 @@ public class MetricPusher : IMetricPusher, IDisposable
     private readonly ICollectorRegistry _collectorRegistry;
     private readonly Uri _targetUri;
 
+    /// <summary>
+    /// Get the target URI for Pushgateway endpoint.
+    /// </summary>
     public Uri TargetUri => _targetUri;
 
     public MetricPusher(MetricPusherOptions options)
