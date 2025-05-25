@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace Prometheus.Client.MetricPusher.Tests;
 
-public class MetricPusherIntegrationTests(PushGatewayFixture fixture, ITestOutputHelper output) : IClassFixture<PushGatewayFixture>
+public class MetricPusherIntegrationTests(PushgatewayFixture fixture, ITestOutputHelper output) : IClassFixture<PushgatewayFixture>
 {
     private readonly string _endpoint = fixture.GetEndpoint();
     private readonly IMetricFactory _metricFactory = new MetricFactory(new CollectorRegistry());

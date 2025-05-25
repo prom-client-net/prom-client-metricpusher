@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Prometheus.Client.MetricPusher.Tests;
 
-public class PushGatewayFixture : IAsyncLifetime
+public class PushgatewayFixture : IAsyncLifetime
 {
     private readonly IContainer _container = new ContainerBuilder()
         .WithImage("prom/pushgateway")
