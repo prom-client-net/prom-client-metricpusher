@@ -6,6 +6,7 @@
     <RepositoryUrl>https://github.com/prom-client-net/prom-client-metricpusher</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="5.2.0" />
+    <Reference Condition="'$(TargetFramework)' == 'net462'" Include="System.Net.Http" />
+    <PackageReference Include="Prometheus.Client" Version="6.0.0" />
   </ItemGroup>
 </Project>
