@@ -4,7 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Prometheus.Client.Collectors;
 using Xunit;
+#if NET462
 using Xunit.Abstractions;
+#endif
 
 namespace Prometheus.Client.MetricPusher.Tests;
 
