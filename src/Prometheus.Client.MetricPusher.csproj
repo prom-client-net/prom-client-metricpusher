@@ -7,6 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Condition="'$(TargetFramework)' == 'net462'" Include="System.Net.Http" />
-    <PackageReference Include="Prometheus.Client" Version="6.1.0" />
+    <PackageReference Include="Prometheus.Client" Version="6.2.0" />
   </ItemGroup>
 </Project>
